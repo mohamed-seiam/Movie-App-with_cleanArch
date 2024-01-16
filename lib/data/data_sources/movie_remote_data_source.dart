@@ -7,6 +7,8 @@ abstract class MovieRemoteDataSource {
   Future<List<MovieModel>> getTrending();
 
   Future<List<MovieModel>> getPopular();
+  Future<List<MovieModel>> getPlayingNow();
+  Future<List<MovieModel>> getComingSoon();
 }
 
 class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
@@ -28,5 +30,22 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
     final popularMovies = MoviesResultModel.fromJson(response).movies;
     print(popularMovies);
     return popularMovies ?? [];
+  }
+
+  @override
+  Future<List<MovieModel>> getComingSoon() async {
+    final response = await _client.get(path: 'movie/upcoming');
+    final upComingMovies = MoviesResultModel.fromJson(response).movies;
+    print(upComingMovies);
+    return upComingMovies??[];
+  }
+
+  @override
+  Future<List<MovieModel>> getPlayingNow() async {
+    final response = await _client.get(path: 'movie/now_playing');
+    final nowPlayingMovies = MoviesResultModel.fromJson(response).movies;
+    print(nowPlayingMovies);
+    return nowPlayingMovies??[];
+    throw UnimplementedError();
   }
 }
