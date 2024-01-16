@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/common/constance/size_constance.dart';
 import 'package:movies_app/presentation/widgets/logo.dart';
 
+import 'navigation_drawer_list_item.dart';
+import 'navigation_expanded_list_tile.dart';
+
 class NavigationDrawerWidget extends StatelessWidget {
   const NavigationDrawerWidget({super.key});
 
@@ -30,6 +33,26 @@ class NavigationDrawerWidget extends StatelessWidget {
                   right: Sizes.dimen_8.w,
                 ),
               child: Logo(height: Sizes.dimen_32.h),
+            ),
+            NavigationListItem(
+              title:'Favourite Movies',
+              onPressed: (){},
+            ),
+            NavigationExpandedListItem(
+              children: const [
+                'English',
+                'Spanish',
+              ],
+              title:'Language',
+              onPressed: (){},
+            ),
+            NavigationListItem(
+              title:'Feedback',
+              onPressed: (){},
+            ),
+            NavigationListItem(
+              title:'About',
+              onPressed: (){},
             ),
           ],
         ),
