@@ -10,6 +10,9 @@ class MovieCarouselInitial extends MovieCarouselState {
 }
 
 class MovieCarouselError extends MovieCarouselState {
+  final AppErrorType appErrorType;
+
+ const MovieCarouselError({required this.appErrorType});
   @override
   List<Object?> get props => [];
 }
