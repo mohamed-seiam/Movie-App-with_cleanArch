@@ -55,4 +55,20 @@ extension ThemeTextExtension on TextTheme {
         color: AppColors.royalBlue,
         fontWeight: FontWeight.w600,
       );
+
+  TextStyle get greySubTitle => titleMedium!.copyWith(
+        color: Colors.grey,
+      );
+
+  TextStyle get greyCaption => bodySmall!.copyWith(
+    color: Colors.grey,
+  );
+
+  TextStyle get violetHeadLine => titleLarge!.copyWith(
+        color: AppColors.violet,
+      );
+  TextStyle get vulcanBodyText2  => titleLarge!.copyWith(
+    color: AppColors.vulcan,
+    fontWeight: FontWeight.w600,
+  );
 }

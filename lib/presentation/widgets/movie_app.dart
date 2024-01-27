@@ -65,7 +65,7 @@ class _MovieAppState extends State<MovieApp> {
                   scaffoldBackgroundColor: AppColors.vulcan,
                   visualDensity: VisualDensity.adaptivePlatformDensity,
                   textTheme: ThemeText.getTextTheme(),
-                  appBarTheme: const AppBarTheme(elevation: 0),
+                  appBarTheme: const AppBarTheme(elevation: 0,),
                 ),
                 home: const HomeScreen(),
               ),
