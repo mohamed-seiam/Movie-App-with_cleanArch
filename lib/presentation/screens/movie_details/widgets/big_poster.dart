@@ -5,15 +5,15 @@ import 'package:movies_app/common/constance/size_constance.dart';
 import 'package:movies_app/common/extensions/num_extension.dart';
 import 'package:movies_app/data/core/api_constance.dart';
 import 'package:movies_app/domain/entities/movie_details_entity.dart';
+import 'package:movies_app/presentation/blocs/favorite_movies/favorite_movies_bloc.dart';
 import 'package:movies_app/presentation/themes/theme_text.dart';
 
 import 'movie_details_app_bar.dart';
 
 class BigPoster extends StatelessWidget {
-  const BigPoster({super.key, required this.movieDetails});
-
+  const BigPoster({super.key, required this.movieDetails, required this.favoriteMoviesBloc});
+final FavoriteMoviesBloc favoriteMoviesBloc;
   final MovieDetailsEntity movieDetails;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -58,7 +58,7 @@ class BigPoster extends StatelessWidget {
           left: Sizes.dimen_16.w,
           right: Sizes.dimen_16.w,
           top: MediaQuery.of(context).padding.top + Sizes.dimen_4.h,
-          child:const MovieDetailAppBar(),
+          child: MovieDetailAppBar(movieDetailsEntity: movieDetails,favoriteMoviesBloc: favoriteMoviesBloc,),
         ),
       ],
     );

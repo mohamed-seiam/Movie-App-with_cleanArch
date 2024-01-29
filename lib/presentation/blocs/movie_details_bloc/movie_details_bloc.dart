@@ -6,6 +6,7 @@ import 'package:movies_app/domain/entities/movie_params.dart';
 
 import '../../../domain/usecases/get_movie_details.dart';
 import '../cast/cast_crew_bloc.dart';
+import '../favorite_movies/favorite_movies_bloc.dart';
 import '../videos/videos_bloc.dart';
 
 part 'movie_details_event.dart';
@@ -16,8 +17,10 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   final GetMovieDetails getMovieDetails;
   final CastCrewBloc getCastBloc;
   final VideosBloc videosBloc;
+  final FavoriteMoviesBloc favoriteMoviesBloc;
 
-  MovieDetailsBloc(this.getMovieDetails, this.getCastBloc, this.videosBloc)
+  MovieDetailsBloc(this.getMovieDetails, this.getCastBloc, this.videosBloc,
+      this.favoriteMoviesBloc)
       : super(MovieDetailsInitial()) {
     on<MovieDetailsEvent>(
       (event, emit) async {
@@ -32,6 +35,8 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
                   MovieDetailsSuccess(movieDetailsEntity: movieDetails),
             ),
           );
+          favoriteMoviesBloc
+              .add(CheckIfFavoriteMovieEvent(movieId: event.movieId));
           getCastBloc.add(
             LoadCastEvent(movieId: event.movieId),
           );
