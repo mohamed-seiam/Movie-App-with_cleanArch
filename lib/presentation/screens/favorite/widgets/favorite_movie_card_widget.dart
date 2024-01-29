@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/common/constance/routes_constance.dart';
 import 'package:movies_app/common/constance/size_constance.dart';
 import 'package:movies_app/data/core/api_constance.dart';
 import 'package:movies_app/domain/entities/movie_entity.dart';
 import 'package:movies_app/presentation/blocs/favorite_movies/favorite_movies_bloc.dart';
 import 'package:movies_app/presentation/screens/movie_details/movie_details_arguments.dart';
-import 'package:movies_app/presentation/screens/movie_details/movie_details_screen.dart';
 
 class FavoriteMovieCardWidget extends StatelessWidget {
   const FavoriteMovieCardWidget({super.key, required this.movie});
@@ -23,14 +23,8 @@ class FavoriteMovieCardWidget extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MovieDetailsScreen(
-                movieDetailsArguments: MovieDetailsArguments(movieId: movie.id),
-              ),
-            ),
-          );
+          Navigator.pushNamed(context, RoutesList.movieDetail,
+              arguments: MovieDetailsArguments(movieId: movie.id));
         },
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(Sizes.dimen_8.w)),
@@ -45,9 +39,10 @@ class FavoriteMovieCardWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
-                  onTap: () => BlocProvider.of<FavoriteMoviesBloc>(context).add(
-                    DeleteFavoriteMovieEvent(movieId: movie.id),
-                  ),
+                  onTap: () =>
+                      BlocProvider.of<FavoriteMoviesBloc>(context).add(
+                        DeleteFavoriteMovieEvent(movieId: movie.id),
+                      ),
                   child: Padding(
                     padding: EdgeInsets.all(Sizes.dimen_12.w),
                     child: Icon(

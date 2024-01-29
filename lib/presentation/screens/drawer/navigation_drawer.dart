@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/common/constance/language.dart';
+import 'package:movies_app/common/constance/routes_constance.dart';
 import 'package:movies_app/common/constance/size_constance.dart';
 import 'package:movies_app/common/constance/translation_constance.dart';
 import 'package:movies_app/common/extensions/string_extension.dart';
@@ -10,7 +11,6 @@ import 'package:movies_app/presentation/widgets/logo.dart';
 import 'package:wiredash/wiredash.dart';
 
 import '../../widgets/app_dialog.dart';
-import '../favorite/favorite_screen.dart';
 import 'navigation_drawer_list_item.dart';
 import 'navigation_expanded_list_tile.dart';
 
@@ -45,12 +45,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             NavigationListItem(
               title: TranslationConstance.favoriteMovies.t(context),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FavoriteScreen(),
-                  ),
-                );
+                Navigator.pushNamed(context,RoutesList.favorite);
               },
             ),
             NavigationExpandedListItem(

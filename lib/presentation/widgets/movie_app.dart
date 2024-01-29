@@ -4,13 +4,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/DI/get_it.dart';
 import 'package:movies_app/common/constance/language.dart';
+import 'package:movies_app/common/constance/routes_constance.dart';
 import 'package:movies_app/presentation/blocs/language_bloc/language_bloc.dart';
+import 'package:movies_app/presentation/routes.dart';
 import 'package:movies_app/presentation/themes/app_colors.dart';
 import 'package:movies_app/presentation/themes/theme_text.dart';
 import 'package:movies_app/presentation/widgets/wired_dash_app.dart';
+import '../../fade_page_route_builder.dart';
 import '../app_localization.dart';
-import '../screens/home/home_screen.dart';
-
 class MovieApp extends StatefulWidget {
   const MovieApp({super.key});
 
@@ -66,15 +67,25 @@ class _MovieAppState extends State<MovieApp> {
                   scaffoldBackgroundColor: AppColors.vulcan,
                   visualDensity: VisualDensity.adaptivePlatformDensity,
                   textTheme: ThemeText.getTextTheme(),
-                  appBarTheme:  AppBarTheme(
-                    elevation: 0.0,
-                    backgroundColor: AppColors.vulcan,
-                    iconTheme: const IconThemeData(color: Colors.white),
-                    centerTitle: true,
-                    titleTextStyle: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16.sp)
-                  ),
+                  appBarTheme: AppBarTheme(
+                      elevation: 0.0,
+                      backgroundColor: AppColors.vulcan,
+                      iconTheme: const IconThemeData(color: Colors.white),
+                      centerTitle: true,
+                      titleTextStyle: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp)),
                 ),
-                home: const HomeScreen(),
+                builder: (context, child) {
+                  return child!;
+                },
+                initialRoute: RoutesList.initial,
+                onGenerateRoute: (RouteSettings settings) {
+                  final routes = Routes.getRoutes(settings);
+                  final WidgetBuilder? builder = routes[settings.name];
+                  return FadePageRouteBuilder(builder!, settings);
+                },
               ),
             );
           }
