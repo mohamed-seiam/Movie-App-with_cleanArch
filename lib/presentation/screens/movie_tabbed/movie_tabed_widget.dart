@@ -5,6 +5,7 @@ import 'package:movies_app/common/constance/size_constance.dart';
 import 'package:movies_app/common/extensions/string_extension.dart';
 import 'package:movies_app/presentation/blocs/movie_tabed/movie_tabed_bloc.dart';
 import 'package:movies_app/presentation/screens/home/movie_carousel/movie_carousel_error_widget.dart';
+import 'package:movies_app/presentation/screens/loading/loading_circle.dart';
 import 'package:movies_app/presentation/screens/movie_tabbed/movie_list_view_builder.dart';
 import 'package:movies_app/presentation/screens/movie_tabbed/movie_tabbe_constance.dart';
 import 'package:movies_app/presentation/screens/movie_tabbed/tab_title_widget.dart';
@@ -26,7 +27,7 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
   @override
   void initState() {
     super.initState();
-    movieTabbedBloc.add(MovieTabbedChangedEvent(currentTabIndex: currentIndex));
+    movieTabbedBloc.add(MovieTabbedChangedEvent(currentTabIndex: currentIndex,currentPage: 1));
   }
 
   @override
@@ -37,7 +38,12 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieTabbedBloc, MovieTabbedState>(
+    return BlocConsumer<MovieTabbedBloc, MovieTabbedState>(
+      listener: (context,state){
+        if (state is MovieTabbedLanguageChanged) {
+          movieTabbedBloc.add(MovieTabbedChangedEvent(currentTabIndex: currentIndex,currentPage: 1));
+        }
+      },
       builder: (context, state) {
         return Padding(
           padding: EdgeInsets.only(top: Sizes.dimen_4.h),
@@ -61,7 +67,7 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
                 ],
               ),
               if (state is MovieTabChanged)
-                state.movies?.isEmpty ?? true
+                state.movies.isEmpty
                     ? Expanded(
                         child: Center(
                         child: Text(
@@ -82,6 +88,8 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
                             currentTabIndex: currentIndex));
                       }),
                 ),
+              if (state is MovieTabbedLoading)
+                Expanded(child:Center(child: LoadingCircle(size: Sizes.dimen_100.w),)),
             ],
           ),
         );

@@ -32,10 +32,12 @@ class AppErrorWidget extends StatelessWidget {
           ButtonBar(
             children: [
               AppButton(
+                isEnabled: true,
                 text: TranslationConstance.retry,
                 onPressed: () => onPressed(),
               ),
               AppButton(
+                isEnabled: true,
                 text: TranslationConstance.feedback,
                 onPressed: () => Wiredash.of(context).show(),
               ),

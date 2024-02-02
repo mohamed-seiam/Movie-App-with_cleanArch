@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:movies_app/data/core/api_constance.dart';
+import 'package:movies_app/data/core/unauthorized_exception.dart';
 
 class ApiClient {
   final Client _client;
@@ -9,7 +10,7 @@ class ApiClient {
   ApiClient(this._client);
 
   dynamic get({required String path, Map<String, dynamic>? queryParams}) async {
-    final String finalPath = getPath(path, queryParams??{});
+    final String finalPath = getPath(path, queryParams ?? {});
     final response = await _client.get(
       Uri.parse(finalPath),
       headers: {
@@ -20,6 +21,22 @@ class ApiClient {
       return json.decode(response.body);
     } else {
       throw Exception(response.reasonPhrase);
+    }
+  }
+
+  dynamic post(String path, {Map<dynamic, dynamic>? params}) async {
+    final String finalPath = getPath(path, null);
+    final response = await _client.post(
+      Uri.parse(finalPath),
+      body: jsonEncode(params),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else if (response.statusCode == 401) {
+      throw UnauthorisedException();
     }
   }
 

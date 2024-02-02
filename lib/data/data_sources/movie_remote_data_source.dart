@@ -6,14 +6,16 @@ import 'package:movies_app/data/models/movies_result_model.dart';
 import 'package:movies_app/data/models/video_model.dart';
 import 'package:movies_app/data/models/video_resault_model.dart';
 
+import 'language_local_data_source.dart';
+
 abstract class MovieRemoteDataSource {
-  Future<List<MovieModel>> getTrending();
+  Future<List<MovieModel>> getTrending(int pageNumber);
 
-  Future<List<MovieModel>> getPopular();
+  Future<List<MovieModel>> getPopular(int pageNumber);
 
-  Future<List<MovieModel>> getPlayingNow();
+  Future<List<MovieModel>> getPlayingNow(int pageNumber);
 
-  Future<List<MovieModel>> getComingSoon();
+  Future<List<MovieModel>> getComingSoon(int pageNumber);
 
   Future<MovieDetailModel> getMovieDetails(int id);
 
@@ -26,36 +28,56 @@ abstract class MovieRemoteDataSource {
 
 class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
   final ApiClient _client;
+  final LanguageLocalDataSource languageLocalDataSource;
 
-  MovieRemoteDataSourceImpl(this._client);
+  MovieRemoteDataSourceImpl(this._client, this.languageLocalDataSource);
 
   @override
-  Future<List<MovieModel>> getTrending() async {
-    final response = await _client.get(path: 'trending/movie/day');
+  Future<List<MovieModel>> getTrending(int pageNumber) async {
+    String languageCode = await languageLocalDataSource.getPreferredLanguage();
+    final response =
+        await _client.get(path: 'trending/movie/day', queryParams: {
+      'page': pageNumber,
+      'language': languageCode,
+    });
     final trendingMovies = MoviesResultModel.fromJson(response).movies;
     print(trendingMovies);
     return trendingMovies ?? [];
   }
 
   @override
-  Future<List<MovieModel>> getPopular() async {
-    final response = await _client.get(path: 'movie/popular');
+  Future<List<MovieModel>> getPopular(int pageNumber) async {
+    String languageCode = await languageLocalDataSource.getPreferredLanguage();
+
+    final response = await _client.get(path: 'movie/popular', queryParams: {
+      'page': pageNumber,
+      'language': languageCode,
+    });
     final popularMovies = MoviesResultModel.fromJson(response).movies;
     print(popularMovies);
     return popularMovies ?? [];
   }
 
   @override
-  Future<List<MovieModel>> getComingSoon() async {
-    final response = await _client.get(path: 'movie/upcoming');
+  Future<List<MovieModel>> getComingSoon(int pageNumber) async {
+    String languageCode = await languageLocalDataSource.getPreferredLanguage();
+
+    final response = await _client.get(path: 'movie/upcoming', queryParams: {
+      'page': pageNumber,
+      'language': languageCode,
+    });
     final upComingMovies = MoviesResultModel.fromJson(response).movies;
     print(upComingMovies);
     return upComingMovies ?? [];
   }
 
   @override
-  Future<List<MovieModel>> getPlayingNow() async {
-    final response = await _client.get(path: 'movie/now_playing');
+  Future<List<MovieModel>> getPlayingNow(int pageNumber) async {
+    String languageCode = await languageLocalDataSource.getPreferredLanguage();
+    final response = await _client.get(path: 'movie/now_playing', queryParams: {
+      'page': pageNumber,
+      'language': languageCode,
+    });
     final nowPlayingMovies = MoviesResultModel.fromJson(response).movies;
     print(nowPlayingMovies);
     return nowPlayingMovies ?? [];
@@ -63,7 +85,11 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   @override
   Future<MovieDetailModel> getMovieDetails(int id) async {
-    final response = await _client.get(path: 'movie/$id');
+    String languageCode = await languageLocalDataSource.getPreferredLanguage();
+
+    final response = await _client.get(path: 'movie/$id', queryParams: {
+      'language': languageCode,
+    });
     final movieDetails = MovieDetailModel.fromJson(response);
     print(movieDetails);
     return movieDetails;
@@ -78,7 +104,11 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   @override
   Future<List<VideoModel>> getVideos(int id) async {
-    final response = await _client.get(path: 'movie/$id/videos');
+    String languageCode = await languageLocalDataSource.getPreferredLanguage();
+
+    final response = await _client.get(path: 'movie/$id/videos', queryParams: {
+      'language': languageCode,
+    });
     final video = VideoResultModel.fromJson(response).videos;
     print(video);
     return video;

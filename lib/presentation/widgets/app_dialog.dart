@@ -57,6 +57,7 @@ class AppDialog extends StatelessWidget {
             ),
             if (image != null) image!,
             AppButton(
+              isEnabled: true,
                 text: TranslationConstance.okay,
                 onPressed: () {
                   Navigator.pop(context);

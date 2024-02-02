@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     movieCarouselBloc = getItInstance<MovieCarouselBloc>();
     movieBackDropBloc = movieCarouselBloc.movieBackDropBloc;
     searchedMovieBloc = getItInstance.get<SearchedMovieBloc>();
-    movieCarouselBloc.add(const CarouselLoadEvent());
+    movieCarouselBloc.add(const CarouselLoadEvent(pageNumber: 1));
     super.initState();
   }
 
@@ -62,7 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       child: Scaffold(
         drawer: const NavigationDrawerWidget(),
-        body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
+        body: BlocConsumer<MovieCarouselBloc, MovieCarouselState>(
+          listener: (context, state) {
+            if (state is MovieCarouselLanguageChanged) {
+              movieCarouselBloc.add(const CarouselLoadEvent(pageNumber: 1));
+            }
+          },
           bloc: movieCarouselBloc,
           builder: (context, state) {
             if (state is MovieCarouselLoaded) {

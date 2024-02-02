@@ -26,3 +26,7 @@ class MovieCarouselLoaded extends MovieCarouselState {
   @override
   List<Object?> get props => [movies, defaultIndex];
 }
+class MovieCarouselLanguageChanged extends MovieCarouselState {
+  @override
+  List<Object?> get props => [];
+}

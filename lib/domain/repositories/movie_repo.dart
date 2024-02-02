@@ -7,13 +7,13 @@ import 'package:movies_app/domain/entities/video_entity.dart';
 import '../entities/app_error.dart';
 
 abstract class MovieRepository {
-  Future<Either<AppError, List<MovieEntity>>> getTrending();
+  Future<Either<AppError, List<MovieEntity>>> getTrending({required int pageNumber});
 
-  Future<Either<AppError, List<MovieEntity>>> getPopular();
+  Future<Either<AppError, List<MovieEntity>>> getPopular({required int pageNumber});
 
-  Future<Either<AppError, List<MovieEntity>>> getPlayingNow();
+  Future<Either<AppError, List<MovieEntity>>> getPlayingNow({required int pageNumber});
 
-  Future<Either<AppError, List<MovieEntity>>> getComingSoon();
+  Future<Either<AppError, List<MovieEntity>>> getComingSoon({required int pageNumber});
 
   Future<Either<AppError, MovieDetailsEntity>> getMovieDetails(int id);
 

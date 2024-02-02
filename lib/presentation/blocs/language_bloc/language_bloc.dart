@@ -8,6 +8,8 @@ import 'package:movies_app/domain/entities/no_params.dart';
 
 import '../../../domain/usecases/get_preferred_language.dart';
 import '../../../domain/usecases/update_language.dart';
+import '../movie_carousel/movie_carousel_bloc.dart';
+import '../movie_tabed/movie_tabed_bloc.dart';
 
 part 'language_event.dart';
 
@@ -16,8 +18,11 @@ part 'language_state.dart';
 class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   final GetPreferredLanguage getPreferredLanguage;
   final UpdateLanguage updateLanguage;
+  final MovieTabbedBloc movieTabbedBloc;
+  final MovieCarouselBloc moveCarouselBloc;
 
-  LanguageBloc(this.getPreferredLanguage, this.updateLanguage)
+  LanguageBloc(this.getPreferredLanguage, this.updateLanguage,
+      this.movieTabbedBloc, this.moveCarouselBloc)
       : super(LanguageLoaded(locale: Locale(Languages.languages[0].code))) {
     on<LanguageEvent>((event, emit) async {
       if (event is ToggleLanguageEvent) {
@@ -27,7 +32,9 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
         final response = await getPreferredLanguage(NoParams());
         response.fold(
           (error) => emit(LanguageError(appErrorType: error.appErrorType)),
-          (languageCode) => emit(LanguageLoaded(locale: Locale(languageCode))),
+          (languageCode) {
+            emit(LanguageLoaded(locale: Locale(languageCode)));
+          },
         );
       }
     });

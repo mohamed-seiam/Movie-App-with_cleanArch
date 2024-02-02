@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/common/constance/language.dart';
 import 'package:movies_app/common/constance/routes_constance.dart';
+import 'package:movies_app/common/constance/sections.dart';
 import 'package:movies_app/common/constance/size_constance.dart';
 import 'package:movies_app/common/constance/translation_constance.dart';
 import 'package:movies_app/common/extensions/string_extension.dart';
 import 'package:movies_app/presentation/blocs/language_bloc/language_bloc.dart';
+import 'package:movies_app/presentation/screens/section/section_screen_arguments.dart';
 import 'package:movies_app/presentation/widgets/logo.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -45,7 +47,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             NavigationListItem(
               title: TranslationConstance.favoriteMovies.t(context),
               onPressed: () {
-                Navigator.pushNamed(context,RoutesList.favorite);
+                Navigator.pushNamed(context, RoutesList.favorite);
               },
             ),
             NavigationExpandedListItem(
@@ -54,6 +56,18 @@ class NavigationDrawerWidget extends StatelessWidget {
               onPressed: (index) {
                 context.read<LanguageBloc>().add(ToggleLanguageEvent(
                     languageEntity: Languages.languages[index]));
+              },
+            ),
+            NavigationExpandedListItem(
+              children: Sections.sections.map((e) => e.name).toList(),
+              title: TranslationConstance.section.t(context),
+              onPressed: (index) {
+                Navigator.pushNamed(
+                  context,
+                  RoutesList.section,
+                  arguments: SectionMoviesArguments(
+                      title: Sections.sections[index].name, index: index),
+                );
               },
             ),
             NavigationListItem(

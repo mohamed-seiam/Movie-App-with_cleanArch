@@ -19,6 +19,7 @@ class VideosWidget extends StatelessWidget {
         if (state is LoadedVideos && state.videos.iterator.moveNext()) {
           final _videos = state.videos;
           return AppButton(
+            isEnabled: true,
             text: TranslationConstance.watchTrailers,
             onPressed: () {
               Navigator.pushNamed(

@@ -71,4 +71,7 @@ extension ThemeTextExtension on TextTheme {
     color: AppColors.vulcan,
     fontWeight: FontWeight.w600,
   );
+  TextStyle get orangeSubtitle1 => titleMedium!.copyWith(
+    color: Colors.orangeAccent,
+  );
 }

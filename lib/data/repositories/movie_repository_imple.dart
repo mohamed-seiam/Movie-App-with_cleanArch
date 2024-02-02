@@ -21,9 +21,9 @@ class MovieRepositoryImplement extends MovieRepository {
       {required this.remoteDataSource});
 
   @override
-  Future<Either<AppError, List<MovieModel>>> getTrending() async {
+  Future<Either<AppError, List<MovieModel>>> getTrending({required int pageNumber}) async {
     try {
-      final movies = await remoteDataSource.getTrending();
+      final movies = await remoteDataSource.getTrending(pageNumber);
       return Right(movies);
     } on SocketException {
       return const Left(AppError(appErrorType: AppErrorType.network));
@@ -33,9 +33,9 @@ class MovieRepositoryImplement extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getComingSoon() async {
+  Future<Either<AppError, List<MovieEntity>>> getComingSoon({required int pageNumber}) async {
     try {
-      final movies = await remoteDataSource.getComingSoon();
+      final movies = await remoteDataSource.getComingSoon(pageNumber);
       return Right(movies);
     } on SocketException {
       return const Left(AppError(appErrorType: AppErrorType.network));
@@ -45,9 +45,9 @@ class MovieRepositoryImplement extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getPlayingNow() async {
+  Future<Either<AppError, List<MovieEntity>>> getPlayingNow({required int pageNumber}) async {
     try {
-      final movies = await remoteDataSource.getPlayingNow();
+      final movies = await remoteDataSource.getPlayingNow(pageNumber);
       return Right(movies);
     } on SocketException {
       return const Left(AppError(appErrorType: AppErrorType.network));
@@ -57,9 +57,9 @@ class MovieRepositoryImplement extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getPopular() async {
+  Future<Either<AppError, List<MovieEntity>>> getPopular({required int pageNumber}) async {
     try {
-      final movies = await remoteDataSource.getPopular();
+      final movies = await remoteDataSource.getPopular(pageNumber);
       return Right(movies);
     } on SocketException {
       return const Left(AppError(appErrorType: AppErrorType.network));

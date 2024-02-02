@@ -2,6 +2,7 @@ class TranslationConstance {
   TranslationConstance._();
   static const String favoriteMovies = 'favoriteMovies';
   static const String language = 'language';
+  static const String section ='section' ;
   static const String about = 'about';
   static const String feedback = 'feedback';
   static const String popular = 'popular';
@@ -17,4 +18,15 @@ class TranslationConstance {
   static const String watchTrailers = 'watchTrailers';
   static const String noMoviesSearched = 'noMoviesSearched';
   static const String noFavoriteMovies = 'noFavoriteMovie';
+  static const String username = 'username';
+  static const String password = 'password';
+  static const String loginToMovieApp = 'loginToMovieApp';
+  static const String signIn = 'signIn';
+  static const String wrongUsernamePassword = 'wrongUsernamePassword';
+  static const String noNetwork = 'noNetwork';
+  static const String logout = 'logout';
+  static const String sessionDenied = 'sessionDenied';
+  static const String enterTMDbUsername = 'enterTMDbUsername';
+  static const String enterPassword = 'enterPassword';
+  static const String guestSignIn = 'guestSignIn';
 }

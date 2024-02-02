@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movies_app/domain/entities/app_error.dart';
-import 'package:movies_app/domain/entities/no_params.dart';
 
 import '../../../domain/entities/movie_entity.dart';
 import '../../../domain/usecases/get_coming_soon.dart';
@@ -22,18 +21,20 @@ class MovieTabbedBloc extends Bloc<MovieTabbedEvent, MovieTabbedState> {
       : super(MovieTabbedInitial()) {
     on<MovieTabbedEvent>((event, emit) async {
       if (event is MovieTabbedChangedEvent) {
+        emit(MovieTabbedLoading(currentTabIndex: event.currentTabIndex));
         late Either<AppError, List<MovieEntity>> movieEither;
         switch (event.currentTabIndex) {
           case 0:
-            movieEither = await getPopular(NoParams());
+            movieEither = await getPopular(event.currentPage);
             break;
           case 1:
-            movieEither = await getPlayingNow(NoParams());
+            movieEither = await getPlayingNow(event.currentPage);
             break;
           case 2:
-            movieEither = await getComingSoon(NoParams());
+            movieEither = await getComingSoon(event.currentPage);
             break;
         }
+
         movieEither.fold(
           (l) => MovieTabLoadError(
               currentIndex: event.currentTabIndex, l.appErrorType),

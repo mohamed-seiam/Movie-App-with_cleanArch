@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/common/constance/routes_constance.dart';
 import 'package:movies_app/common/constance/size_constance.dart';
 import 'package:movies_app/data/core/api_constance.dart';
+import 'package:movies_app/presentation/screens/loading/loading_circle.dart';
 import 'package:movies_app/presentation/screens/movie_details/movie_details_arguments.dart';
 import 'package:movies_app/presentation/themes/app_colors.dart';
 
@@ -33,6 +34,9 @@ class MovieCardWidget extends StatelessWidget {
               return const Center(
                 child: Icon(Icons.error),
               );
+            },
+            placeholder: (context,object){
+              return LoadingCircle(size:Sizes.dimen_200.w);
             },
             fit: BoxFit.cover,
           ),
